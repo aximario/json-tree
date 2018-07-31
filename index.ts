@@ -4,7 +4,7 @@ interface Config {
 	children: string
 }
 
-export default function (data : Array<object>, config : Config) {
+export = function (data : Array<object>, config : Config) {
 	const id = config.id || 'id'
 	const pid = config.pid || 'pid'
 	const children = config.children || 'children'

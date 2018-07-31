@@ -4,6 +4,7 @@
   "description": "把扁平化的数据转为成结构化的数据",
   "main": "index.js",
   "scripts": {
+    "prepublishOnly": "tsc",
     "build": "tsc",
     "test": "jest"
   },

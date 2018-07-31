@@ -5,7 +5,7 @@
 ## 安装
 
 ```bash
-npm install --save ax-json-tree
+npm install --save @aximario/json-tree
 ```
 ## API
 
@@ -13,10 +13,10 @@ jsonTree(data, config)
 
 * data: 数组,扁平化数据
 * config: 配置对象
-    - id 数据里的id string类型
-    - pid 数据里的父id string类型
-    - children 生成结果中子节点的字段名 string类型
-* 返回一个树形结构的对象
+    - id 数据里的 id，string 类型
+    - pid 数据里的父 id，string 类型
+    - children 生成结果中子节点的字段名，string 类型
+* 返回一个数组对象，里面可能包含多个树结构
 
 
 ## 用法

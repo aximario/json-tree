@@ -1,6 +1,5 @@
 "use strict";
-exports.__esModule = true;
-function default_1(data, config) {
+module.exports = function (data, config) {
     var id = config.id || 'id';
     var pid = config.pid || 'pid';
     var children = config.children || 'children';
@@ -20,6 +19,4 @@ function default_1(data, config) {
         }
     });
     return jsonTree;
-}
-exports["default"] = default_1;
-;
+};
