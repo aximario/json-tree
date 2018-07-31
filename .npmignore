@@ -1,0 +1,6 @@
+package-lock.json
+.nvmrc
+index.ts
+tsconfig.json
+.gitignore
+index.test.ts
