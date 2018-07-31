@@ -1,6 +1,6 @@
 {
   "name": "@aximario/json-tree",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "把扁平化的数据转为成结构化的数据",
   "main": "index.js",
   "scripts": {
