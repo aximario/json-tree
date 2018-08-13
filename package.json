@@ -36,10 +36,10 @@
   "dependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aximario/ax-json-tree.git"
+    "url": "git+https://github.com/aximario/json-tree.git"
   },
   "bugs": {
-    "url": "https://github.com/aximario/ax-json-tree/issues"
+    "url": "https://github.com/aximario/json-tree/issues"
   },
-  "homepage": "https://github.com/aximario/ax-json-tree#readme"
+  "homepage": "https://github.com/aximario/json-tree#readme"
 }
