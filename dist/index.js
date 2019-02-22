@@ -40,3 +40,7 @@ function destruct(forest, children) {
     return nodes.map(function (v) { delete v[children]; return v; });
 }
 exports.destruct = destruct;
+exports["default"] = {
+    construct: construct,
+    destruct: destruct
+};
