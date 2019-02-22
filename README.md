@@ -1,5 +1,7 @@
 # JSON-Tree
 
+[![Build Status](https://travis-ci.org/aximario/json-tree.svg?branch=master)](https://travis-ci.org/aximario/json-tree)
+
 把扁平化的数据构建成结构化的 JSON 或者把结构化的数据扁平化
 
 ## 安装
