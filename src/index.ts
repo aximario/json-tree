@@ -30,9 +30,9 @@ function bfs(tree: object, children: string, operation: (node: object) => void) 
 	let queue = [tree];
 	while (queue.length) {
 		const currentNode = queue.shift();
-		operation(currentNode)
+		operation(currentNode);
 		if (currentNode[children]) {
-			currentNode[children].forEach((v) => queue.push(v))
+			currentNode[children].forEach((v) => queue.push(v));
 		}
 	}
 }
@@ -45,5 +45,10 @@ export function destruct(forest: object[], children?: string) {
 	forest.forEach((v) => {
 		bfs(v, kids, (value) => { nodes.push(value) });
 	});
-	return nodes.map(v => { delete v[children]; return v })
+	return nodes.map(v => { delete v[children]; return v });
+}
+
+export default {
+	construct,
+	destruct,
 }

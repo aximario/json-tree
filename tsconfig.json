@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "removeComments": true,
-    "preserveConstEnums": true,
+    "outDir": "dist",
+    "module": "CommonJS",
+    "esModuleInterop": true
   },
   "files": [
-    "index.ts",
+    "src/index.ts",
   ]
 }
