@@ -21,10 +21,13 @@ npm install --save @aximario/json-tree
     - children 生成结果中子节点的字段名，string 类型
 * 返回一个数组对象，里面可能包含多个树结构
 
-### destruct(data, children)
+### destruct(data, config)
 
 * data: 数组，结构化的数据
-* children: 数据子节点的字段名，string 类型
+* config: 配置对象
+    - id 数据里的 id，string 类型，默认为 'id'
+    - pid 数据里添加的父 id 信息，string 类型，默认为 'pid'
+    - children 生成结果中子节点的字段名，string 类型，默认为 'children'
 * 返回一个数组对象，里面为展开的数据
 
 
@@ -33,7 +36,7 @@ npm install --save @aximario/json-tree
 ```javascript
 import { construct, destruct } from '@aximario/json-tree';
 
-let data = [
+const data = [
     {id: 6, parent_id: 2, data: '这是其他数据'},
     {id: 7, parent_id: 3, data: '这是其他数据'},
     {id: 2, parent_id: 1, data: '这是其他数据'},
@@ -46,7 +49,7 @@ let data = [
     {id: 10, parent_id:6, data: '这是其他数据'}
 ];
 
-let result = construct(data, {
+const result = construct(data, {
     id: 'id',
     pid: 'parent_id',
     children: 'kids'
@@ -119,21 +122,78 @@ console.log(JSON.stringify(result, null, '\t'));
 ]
 */
 
-const destructedData = destruct(result, 'kids')
+const data2 = [
+	{
+		"id": 1,
+		"data": "这是其他数据",
+		"kids": [
+			{
+				"id": 2,
+				"data": "这是其他数据",
+				"kids": [
+					{
+						"id": 6,
+						"data": "这是其他数据",
+						"kids": [
+							{
+								"id": 10,
+								"parent_id": 6,
+								"data": "这是其他数据"
+							}
+						]
+					},
+					{
+						"id": 4,
+						"data": "这是其他数据"
+					},
+					{
+						"id": 5,
+						"data": "这是其他数据",
+						"kids": [
+							{
+								"id": 9,
+								"data": "这是其他数据"
+							}
+						]
+					}
+				]
+			},
+			{
+				"id": 3,
+				"data": "这是其他数据",
+				"kids": [
+					{
+						"id": 7,
+						"data": "这是其他数据"
+					},
+					{
+						"id": 8,
+						"data": "这是其他数据"
+					}
+				]
+			}
+		]
+	}
+];
+
+const destructedData = destruct(data2, {
+	pid: 'parent_id', // 展开后的父节点 id 名称
+	children: 'kids', // 子节点名称
+})
 
 console.log(destructedData)
 /**
 [
-    {id: 6, parent_id: 2, data: '这是其他数据'},
-    {id: 7, parent_id: 3, data: '这是其他数据'},
-    {id: 2, parent_id: 1, data: '这是其他数据'},
-    {id: 4, parent_id: 2, data: '这是其他数据'},
-    {id: 1, parent_id: 0, data: '这是其他数据'},
-    {id: 9, parent_id: 5, data: '这是其他数据'},
-    {id: 8, parent_id: 3, data: '这是其他数据'},
-    {id: 3, parent_id: 1, data: '这是其他数据'},
-    {id: 5, parent_id: 2, data: '这是其他数据'},
-    {id: 10, parent_id:6, data: '这是其他数据'}
+	{ id: 6, parent_id: 2, data: '这是其他数据' },
+	{ id: 7, parent_id: 3, data: '这是其他数据' },
+	{ id: 2, parent_id: 1, data: '这是其他数据' },
+	{ id: 4, parent_id: 2, data: '这是其他数据' },
+	{ id: 1, parent_id: null, data: '这是其他数据' },
+	{ id: 9, parent_id: 5, data: '这是其他数据' },
+	{ id: 8, parent_id: 3, data: '这是其他数据' },
+	{ id: 3, parent_id: 1, data: '这是其他数据' },
+	{ id: 5, parent_id: 2, data: '这是其他数据' },
+	{ id: 10, parent_id: 6, data: '这是其他数据' }
 ]
  */
 ```

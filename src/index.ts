@@ -26,24 +26,33 @@ export function construct(nodes: object[], config?: Config) {
 	return jsonTree;
 };
 
-function bfs(tree: object, children: string, operation: (node: object) => void) {
-	let queue = [tree];
+function bfs(tree: object, id: string, pid: string, children: string, operation: (node: object) => void) {
+	const queue = [tree];
 	while (queue.length) {
-		const currentNode = queue.shift();
-		operation(currentNode);
-		if (currentNode[children]) {
-			currentNode[children].forEach((v) => queue.push(v));
+		let currentNode = queue.shift();
+		if (currentNode.hasOwnProperty(id)) {
+			if (!currentNode.hasOwnProperty(pid)) {
+				currentNode = {...currentNode, [pid]: null};
+			}
+			operation(currentNode);
+			if (currentNode[children]) {
+				currentNode[children].forEach((v) => queue.push({ ...v, [pid]: currentNode[id] }));
+			}
+		} else {
+			throw new Error('you need to specify the [id] of the json tree')
 		}
 	}
 }
 
-export function destruct(forest: object[], children?: string) {
-	const kids = children || 'children';
+export function destruct(forest: object[], config?: Config) {
+	const id = config && config.id || 'id';
+	const pid = config && config.pid || 'pid';
+	const children = config && config.children || 'children';
 
 	const nodes = [];
 
 	forest.forEach((v) => {
-		bfs(v, kids, (value) => { nodes.push(value) });
+		bfs(v, id, pid, children, (value) => { nodes.push(value) });
 	});
 	return nodes.map(v => { delete v[children]; return v });
 }
