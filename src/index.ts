@@ -32,7 +32,7 @@ function bfs(tree: object, id: string, pid: string, children: string, operation:
 		let currentNode = queue.shift();
 		if (currentNode.hasOwnProperty(id)) {
 			if (!currentNode.hasOwnProperty(pid)) {
-				currentNode = {...currentNode, [pid]: null};
+				currentNode = { ...currentNode, [pid]: null };
 			}
 			operation(currentNode);
 			if (currentNode[children]) {
