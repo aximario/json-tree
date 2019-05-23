@@ -4,6 +4,12 @@ interface Config {
 	children?: string;
 }
 
+/**
+ * constrcut 方法
+ * 根据提供的 id, pid 和 children 将一个个节点构建成一棵或者多棵树
+ * @param nodes 节点对象
+ * @param config 配置对象
+ */
 export function construct(nodes: object[], config?: Config) {
 	const id = config && config.id || 'id';
 	const pid = config && config.pid || 'pid';
@@ -44,6 +50,12 @@ function bfs(tree: object, id: string, pid: string, children: string, operation:
 	}
 }
 
+/**
+ * destruct 方法
+ * 根据配置的 id, pid 和 children 把解构化的树型对象拆解为一个个节点
+ * @param forest 单个或者多个树型对象
+ * @param config 配置
+ */
 export function destruct(forest: object[], config?: Config) {
 	const id = config && config.id || 'id';
 	const pid = config && config.pid || 'pid';
