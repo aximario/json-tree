@@ -11,42 +11,37 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * constrcut 方法
- * 根据提供的 id, pid 和 children 将一个个节点构建成一棵或者多棵树
- * @param nodes 节点对象
- * @param config 配置对象
- */
+exports.destruct = exports.construct = void 0;
+var index_interface_1 = require("./index.interface");
 function construct(nodes, config) {
-    var id = config && config.id || 'id';
-    var pid = config && config.pid || 'pid';
-    var children = config && config.children || 'children';
+    var id = (config && config.id) || 'id';
+    var pid = (config && config.pid) || 'pid';
+    var children = (config && config.children) || 'children';
     var idMap = {};
     var jsonTree = [];
-    nodes.forEach(function (v) { idMap[v[id]] = v; });
     nodes.forEach(function (v) {
-        var parent = idMap[v[pid]];
-        if (parent) {
-            !parent[children] && (parent[children] = []);
-            parent[children].push(v);
-        }
-        else {
-            jsonTree.push(v);
+        v && v[id] && (idMap[v[id]] = v);
+    });
+    nodes.forEach(function (v) {
+        if (v && v[id]) {
+            var parent_1 = idMap[v[pid]];
+            if (parent_1) {
+                !parent_1[children] && (parent_1[children] = []);
+                parent_1[children].push(v);
+            }
+            else {
+                jsonTree.push(v);
+            }
         }
     });
     return jsonTree;
 }
 exports.construct = construct;
-/**
- * destruct 方法
- * 根据配置的 id, pid 和 children 把解构化的树型对象拆解为一个个节点
- * @param forest 单个或者多个树型对象
- * @param config 配置
- */
 function destruct(forest, config) {
-    var id = config && config.id || 'id';
-    var pid = config && config.pid || 'pid';
-    var children = config && config.children || 'children';
+    var id = (config && config.id) || 'id';
+    var pid = (config && config.pid) || 'pid';
+    var children = (config && config.children) || 'children';
+    var mode = (config && config.mode) || index_interface_1.DestructOptionsMode.all;
     function flatTree(tree) {
         var queue = [tree];
         var result = [];
@@ -54,23 +49,44 @@ function destruct(forest, config) {
             var _a;
             var currentNode = queue.shift();
             if (currentNode.hasOwnProperty(id)) {
-                if (!currentNode.hasOwnProperty(pid)) {
-                    currentNode = __assign({}, currentNode, (_a = {}, _a[pid] = null, _a));
+                var type = index_interface_1.NodeType.leaf;
+                if (currentNode.hasOwnProperty(pid) && Boolean(currentNode[pid])) {
+                    if (currentNode[children] && currentNode[children].length) {
+                        type = index_interface_1.NodeType.branch;
+                    }
                 }
-                if (currentNode[children]) {
+                else {
+                    type = index_interface_1.NodeType.root;
+                }
+                if (type === index_interface_1.NodeType.root) {
+                    currentNode = __assign(__assign({}, currentNode), (_a = {}, _a[pid] = null, _a));
+                }
+                if (type === index_interface_1.NodeType.root || type === index_interface_1.NodeType.branch) {
                     currentNode[children].forEach(function (v) {
                         var _a;
-                        return queue.push(__assign({}, v, (_a = {}, _a[pid] = currentNode[id], _a)));
+                        v && queue.push(__assign(__assign({}, v), (_a = {}, _a[pid] = currentNode[id], _a)));
                     });
                 }
-                result.push(currentNode);
                 delete currentNode[children];
-            }
-            else {
-                throw new Error('you need to specify the [id] of the json tree');
+                if (mode === index_interface_1.DestructOptionsMode.all) {
+                    result.push(currentNode);
+                }
+                if (mode === index_interface_1.DestructOptionsMode.branch && type === index_interface_1.NodeType.branch) {
+                    result.push(currentNode);
+                }
+                if (mode === index_interface_1.DestructOptionsMode.leaf && type === index_interface_1.NodeType.leaf) {
+                    result.push(currentNode);
+                }
+                if (mode === index_interface_1.DestructOptionsMode.nonleaf &&
+                    (type === index_interface_1.NodeType.root || type === index_interface_1.NodeType.branch)) {
+                    result.push(currentNode);
+                }
+                if (mode === index_interface_1.DestructOptionsMode.root && type === index_interface_1.NodeType.root) {
+                    result.push(currentNode);
+                }
             }
         };
-        while (queue.length) {
+        while (queue.length > 0) {
             _loop_1();
         }
         return result;

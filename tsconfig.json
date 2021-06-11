@@ -1,12 +1,17 @@
 {
   "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "strict": true,
+    "removeComments": true,
+    "noLib": false,
+    "esModuleInterop": true,
     "target": "es5",
-    "lib": ["es6"], 
-    "outDir": "dist",
-    "module": "CommonJS",
-    "esModuleInterop": true
+    "sourceMap": false,
+    "outDir": "./dist",
+    "rootDir": "./lib",
+    "skipLibCheck": true
   },
-  "files": [
-    "src/index.ts",
-  ]
+  "include": ["lib/**/*"],
+  "exclude": ["node_modules", "**/*.spec.ts", "**/*.test.ts", "tests"]
 }
