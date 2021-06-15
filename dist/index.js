@@ -62,10 +62,12 @@ function destruct(forest, config) {
                     currentNode = __assign(__assign({}, currentNode), (_a = {}, _a[pid] = null, _a));
                 }
                 if (type === index_interface_1.NodeType.root || type === index_interface_1.NodeType.branch) {
-                    currentNode[children].forEach(function (v) {
-                        var _a;
-                        v && queue.push(__assign(__assign({}, v), (_a = {}, _a[pid] = currentNode[id], _a)));
-                    });
+                    if (Array.isArray(currentNode[children]) && currentNode[children].length > 0) {
+                        currentNode[children].forEach(function (v) {
+                            var _a;
+                            v && queue.push(__assign(__assign({}, v), (_a = {}, _a[pid] = currentNode[id], _a)));
+                        });
+                    }
                 }
                 delete currentNode[children];
                 if (mode === index_interface_1.DestructOptionsMode.all) {
