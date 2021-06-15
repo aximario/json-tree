@@ -62,9 +62,11 @@ export function destruct(forest: object[] | object, config?: DestructOptions) {
           currentNode = { ...currentNode, [pid]: null }
         }
         if (type === NodeType.root || type === NodeType.branch) {
-          currentNode[children].forEach((v: any) => {
-            v && queue.push({ ...v, [pid]: currentNode[id] })
-          })
+          if (currentNode[children]) {
+            currentNode[children].forEach((v: any) => {
+              v && queue.push({ ...v, [pid]: currentNode[id] })
+            })
+          }
         }
         delete currentNode[children]
         if (mode === DestructOptionsMode.all) {
