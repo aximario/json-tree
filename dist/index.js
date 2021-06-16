@@ -94,7 +94,7 @@ function destruct(forest, config) {
         return result;
     }
     if (Array.isArray(forest)) {
-        return forest.map(function (v) { return flatTree(v); }).reduce(function (pre, cur) { return pre.concat(cur); });
+        return forest.map(function (v) { return flatTree(v); }).reduce(function (pre, cur) { return pre.concat(cur); }, []);
     }
     else {
         return flatTree(forest);
