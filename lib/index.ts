@@ -93,7 +93,7 @@ export function destruct(forest: object[] | object, config?: DestructOptions) {
   }
 
   if (Array.isArray(forest)) {
-    return forest.map(v => flatTree(v)).reduce((pre, cur) => pre.concat(cur))
+    return forest.map(v => flatTree(v)).reduce((pre, cur) => pre.concat(cur), [])
   } else {
     return flatTree(forest)
   }

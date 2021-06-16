@@ -3,6 +3,13 @@ import { construct, destruct } from './index'
 import { DestructOptionsMode } from './index.interface'
 
 describe('construct 方法是否正确', () => {
+  test('构建单个树 - 空树', () => {
+    expect(construct([], {
+      id: 'id',
+      pid: 'parent_id',
+      children: 'kids'
+    })).toEqual([])
+  })
   test('构建单个树', () => {
     expect(construct([
       { id: 6, parent_id: 2, data: '这是其他数据' },
@@ -322,6 +329,14 @@ describe('construct 方法是否正确', () => {
 })
 
 describe('destruct 方法是否正确', () => {
+  test('解构单个树 - 空树', () => {
+    expect(
+      destruct({}, {
+        pid: 'parent_id',
+        children: 'kids',
+      })
+    ).toEqual([]);
+  });
   test('解构单个树', () => {
     expect(
       destruct(
@@ -539,6 +554,14 @@ describe('destruct 方法是否正确', () => {
       { id: 9, parent_id: 7, data: '这是其他数据' },
       { id: 10, parent_id: 9, data: '这是其他数据' }
     ]))
+  })
+  test('解构多个树 - 空树', () => {
+    expect(
+      destruct([], {
+        pid: 'parent_id',
+        children: 'kids',
+      })
+    ).toEqual([])
   })
   test('解构多个树 children中含有 null 和 undefined', () => {
     expect(
