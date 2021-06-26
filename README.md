@@ -12,30 +12,54 @@ npm install --save @aximario/json-tree
 
 ## API
 
-### construct(data, config)
+### `construct(data, config)`
 
 construct 会自动过滤掉 null 和 undefined 值
 
-- data: 数组，扁平化的数据
-- config: 配置对象
-  - id 数据里的 id，string 类型
-  - pid 数据里的父 id，string 类型
-  - children 生成结果中子节点的字段名，string 类型
-- 返回一个数组对象，里面可能包含多个树结构
+#### 参数
 
-### destruct(data, config)
+| 字段 | 类型 | 描述 |
+|-----|------|------|
+| data | Array |数组，扁平化的数据|
+|config | Object |配置对象|
+
+##### config 参数
+
+| 字段 | 类型 | 默认值 | 描述 |
+|-----|------|------| -----|
+| id | string | id |数据中的 id 字段名，会根据该字段构建树|
+|pid | string | pid |数据中的 parent id 字段名，会根据该字段构建树|
+|children | string | children |生成结果中子节点的字段名，会根据该字段构建树|
+
+#### 返回
+
+返回一个数组对象，里面可能包含多个树结构
+
+### `destruct(data, config)`
 
 destruct 会自动过滤掉 null 和 undefined 值
 
-- data: 数组或者树型对象，结构化的数据
-- config: 配置对象
-  - id 数据里的 id，string 类型，默认为 'id'
-  - pid 数据里添加的父 id 信息，string 类型，默认为 'pid'
-  - children 生成结果中子节点的字段名，string 类型，默认为 'children'
-  - mode 选择解构的结果集，all（默认）: 所有节点，root: 只返回根节点，leaf: 只返回叶节点，branch: 返回分支节点（不包含 root 节点），nonleaf: 返回根节点和分支节点
-- 返回一个数组对象，里面为展开的数据
+#### 参数
 
-## 用法
+| 字段 | 类型 | 描述 |
+|-----|------|------|
+| data | Array |数组或者树型对象，结构化的数据|
+|config | Object |配置对象|
+
+##### config 参数
+
+| 字段 | 类型 | 默认值 | 描述 |
+|-----|------|------|------|
+| id | string | id |数据中的 id 字段名，会根据该字段构建树|
+|pid | string | pid | 数据中的 parent id 字段名，会根据该字段构建树|
+|children | string | children | 生成结果中子节点的字段名，会根据该字段构建树|
+|mode | Enum | all | 选择解构的结果集，all（默认）: 所有节点，root: 只返回根节点，leaf: 只返回叶节点，branch: 返回分支节点（不包含 root 节点），nonleaf: 返回根节点和分支节点|
+
+#### 返回
+
+返回一个数组对象，里面为展开的数据
+
+## 用法示例
 
 ```javascript
 import { construct, destruct } from '@aximario/json-tree'
